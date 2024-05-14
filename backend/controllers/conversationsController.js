@@ -17,7 +17,7 @@ export const createConversation = async (req, res) => {
 export const getConversation = async (req, res) => {
     try {
         const conversations = await conversationsModel.find({
-            members: { $in: [req.params.userId, req.params.receiverId] },
+            members: { $in: [req.params.userId] },
         });
         const conversationUserData = Promise.all(conversations.map(async (conversation) => {
             const receiverId = conversation.members.find((member) => member !== req.params.userId);

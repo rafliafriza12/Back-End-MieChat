@@ -4,7 +4,7 @@ import { createConversation, getConversation } from "../controllers/conversation
 
 const conversationRouter = express.Router();
 
-conversationRouter.get("/:userId/:receiverId", getConversation);
+conversationRouter.get("/:userId", getConversation);
 conversationRouter.post("/", createConversation);
 
 export default conversationRouter;
