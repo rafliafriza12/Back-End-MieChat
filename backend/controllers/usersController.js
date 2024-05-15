@@ -80,3 +80,25 @@ export const getAllUsers = async (req, res) => {
         res.status(500).json(err);
     }
 }
+
+export const editUser = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const { fullName, email } = req.body;
+
+        if (!userId || !fullName || !email) {
+            return res.status(400).json({ message: "ID pengguna, nama lengkap, dan email harus disediakan." });
+        }
+
+        const updatedUser = await usersModel.findByIdAndUpdate(userId, { fullName, email }, { new: true });
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "Pengguna tidak ditemukan." });
+        }
+
+        return res.status(200).json({ user: {id: updatedUser._id, email: updatedUser.email, fullName: updatedUser.fullName}});
+    } catch (error) {
+        console.error("error:", error);
+        return res.status(500).json({ message: "Terjadi kesalahan saat mengedit pengguna." });
+    }
+}
